@@ -4,6 +4,27 @@
 
 <!-- TODO: Filtering task:
      Build a GET form for category and status. -->
+<form method="get" action="{% url 'events:event_list' %}">
+    <label for="category">Category:</label>
+    <select name="category" id="category">
+        <option value="">All categories</option>
+        {% for category in categories %}
+            <option value="{{ category.id }}">
+                {{ category.name }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <label for="status">Status:</label>
+    <select name="status" id="status">
+        <option value="">All statuses</option>
+        <option value="upcoming">Upcoming</option>
+        <option value="ongoing">Ongoing</option>
+        <option value="finished">Finished</option>
+    </select>
+
+    <button type="submit">Filter</button>
+</form>
 
 {% if user.is_authenticated %}
 <p>Welcome, {{ user.username }}!</p>
@@ -13,17 +34,46 @@
 <article>
     <!-- TODO: Display event title and link to detail. -->
     <!-- TODO: Display category, date, location, status, capacity. -->
-
+    <p>
+        <strong>Title:</strong>
+        <a href="{% url 'events:event_detail' event.id %}">{{ event.title }}</a>
+    </p>
+    <p>
+        <strong>Category:</strong>
+        {{ event.category.name }}
+    </p>
+    <p>
+        <strong>Date:</strong>
+        {{ event.event_date }}
+    </p>
+    <p>
+        <strong>Location:</strong>
+        {{ event.location }}
+    </p>
+    <p>
+        <strong>Status:</strong>
+        {{ event.status }}
+    </p>
+    <p>
+        <strong>Capacity:</strong>
+        {{ event.capacity }}
+    </p>
     {% if user.is_authenticated %}
         <!-- TODO: Add a POST registration form with CSRF protection. -->
+        <form method="post" action="{% url 'events:register_event' event.id %}">
+            {% csrf_token %}
+            <button type="submit">Register</button>
+        </form>
     {% endif %}
 
     {% if perms.events.change_event %}
         <!-- TODO: Show Edit link. -->
+         <a href="{% url 'events:edit_event' event.id %}">Edit</a>
     {% endif %}
 
     {% if perms.events.delete_event %}
         <!-- TODO: Show Delete link/form. -->
+         <a href="{% url 'events:delete_event' event.id %}">Delete</a>
     {% endif %}
 </article>
 <hr>

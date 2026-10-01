@@ -5,9 +5,44 @@
 
 <!-- TODO: Display description, category, organizer, location,
      event date, status, and capacity. -->
+<p>
+    <strong>Title:</strong>
+    {{ event.title }}
+</p>
+<p>
+    <strong>Category:</strong>
+    {{ event.category.name }}
+</p>
+<p>
+    <strong>Date:</strong>
+    {{ event.event_date }}
+</p>
+<p>
+    <strong>Location:</strong>
+    {{ event.location }}
+</p>
+<p>
+    <strong>Status:</strong>
+    {{ event.status }}
+</p>
+<p>
+    <strong>Capacity:</strong>
+    {{ event.capacity }}
+</p>
 
 {% if user.is_authenticated %}
 <!-- TODO: Create a POST registration form and include CSRF token. -->
+<form method="post" action="{% url 'events:register_event' event.id %}">
+    {% csrf_token %}
+    <button type="submit">Register</button>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</form>
 {% else %}
 <p>Login to register.</p>
 {% endif %}
@@ -16,6 +51,7 @@
 <ul>
 {% for registration in registrations %}
     <!-- TODO: Display registration.user.username. -->
+     <li>{{ registration.user.username }}</li>
 {% empty %}
     <li>No registrations yet.</li>
 {% endfor %}

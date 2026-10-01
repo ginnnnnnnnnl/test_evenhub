@@ -2,7 +2,7 @@ from pathlib import Path
 BASE_DIR=Path(__file__).resolve().parent.parent
 SECRET_KEY="student-eventhub-key"
 DEBUG=True
-ALLOWED_HOSTS=["localhost","127.0.0.1"]
+ALLOWED_HOSTS=["localhost","127.0.0.1", '192.41.170.121']
 
 INSTALLED_APPS=[
 "django.contrib.admin","django.contrib.auth","django.contrib.contenttypes",
@@ -37,3 +37,4 @@ DEFAULT_AUTO_FIELD="django.db.models.BigAutoField"
 
 # TODO: Configure LOGIN_URL for @login_required.
 # LOGIN_URL = "events:login"
+LOGIN_URL = "events:login"
